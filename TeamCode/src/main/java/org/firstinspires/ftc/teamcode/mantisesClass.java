@@ -14,12 +14,12 @@ public class mantisesClass {
 
     }
 
-    public void runToPositionForward(DcMotor left, DcMotor right, int inches, double power){
+    public void runToPositionForward(DcMotor left, DcMotor right, int inches){
         resetChassisEncoders(left, right);
         left.setTargetPosition(inches*107);
         right.setTargetPosition(inches*107);
-        left.setPower(power);
-        right.setPower(power);
+        left.setPower(0.5);
+        right.setPower(0.5);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -38,23 +38,23 @@ public class mantisesClass {
 
         }
     }
-    public void turnLeft(DcMotor left, DcMotor right, int degrees, double power){
+    public void turnLeft(DcMotor left, DcMotor right, int degrees){
         resetChassisEncoders(left, right);
         left.setTargetPosition(-(degrees*14));
         right.setTargetPosition(degrees*14);
-        left.setPower(power);
-        right.setPower(power);
+        left.setPower(0.5);
+        right.setPower(0.5);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
     }
-    public void turnRight(DcMotor left, DcMotor right, int degrees, double power){
+    public void turnRight(DcMotor left, DcMotor right, int degrees){
         resetChassisEncoders(left, right);
         left.setTargetPosition(degrees*13);
         right.setTargetPosition(-(degrees*13));
-        left.setPower(power);
-        right.setPower(power);
+        left.setPower(0.5);
+        right.setPower(0.5);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
