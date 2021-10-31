@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class mantisesClass {
 
-    int difference;
+
     hwMapMantises hwMap = new hwMapMantises();
     public void resetChassisEncoders(DcMotor left, DcMotor right){
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -14,10 +14,10 @@ public class mantisesClass {
 
     }
 
-    public void runToPositionForward(DcMotor left, DcMotor right, int ticks, double power){
+    public void runToPositionForward(DcMotor left, DcMotor right, int inches, double power){
         resetChassisEncoders(left, right);
-        left.setTargetPosition(ticks);
-        right.setTargetPosition(ticks);
+        left.setTargetPosition(inches*107);
+        right.setTargetPosition(inches*107);
         left.setPower(power);
         right.setPower(power);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -38,10 +38,10 @@ public class mantisesClass {
 
         }
     }
-    public void turnLeft(DcMotor left, DcMotor right, int ticks, double power){
+    public void turnLeft(DcMotor left, DcMotor right, int degrees, double power){
         resetChassisEncoders(left, right);
-        left.setTargetPosition(-ticks);
-        right.setTargetPosition(ticks);
+        left.setTargetPosition(-(degrees*14));
+        right.setTargetPosition(degrees*14);
         left.setPower(power);
         right.setPower(power);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -49,10 +49,10 @@ public class mantisesClass {
 
 
     }
-    public void turnRight(DcMotor left, DcMotor right, int ticks, double power){
+    public void turnRight(DcMotor left, DcMotor right, int degrees, double power){
         resetChassisEncoders(left, right);
-        left.setTargetPosition(ticks);
-        right.setTargetPosition(-ticks);
+        left.setTargetPosition(degrees*13);
+        right.setTargetPosition(-(degrees*13));
         left.setPower(power);
         right.setPower(power);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -79,6 +79,14 @@ public class mantisesClass {
 
 
 
+    }
+    public void teleOpTurnLeft(DcMotor left, DcMotor right, float power){
+            left.setPower(-power);
+            right.setPower(power);
+    }
+    public void teleOpTurnRight(DcMotor left, DcMotor right, float power){
+        left.setPower(power);
+        right.setPower(-power);
     }
 
 }
