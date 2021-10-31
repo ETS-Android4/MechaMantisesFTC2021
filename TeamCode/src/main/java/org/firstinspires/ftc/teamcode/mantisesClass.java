@@ -80,13 +80,6 @@ public class mantisesClass {
 
 
     }
-    public void teleOpTurnLeft(DcMotor left, DcMotor right, float power){
-            left.setPower(-power);
-            right.setPower(power);
-    }
-    public void teleOpTurnRight(DcMotor left, DcMotor right, float power){
-        left.setPower(power);
-        right.setPower(-power);
-    }
+
 
 }
