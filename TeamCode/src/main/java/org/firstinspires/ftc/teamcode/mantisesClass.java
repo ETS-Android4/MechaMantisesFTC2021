@@ -2,13 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class mantisesClass{
     LinearOpMode op = null;
-    public DcMotor left_wheel = null;
+    public DcMotor left_wheel;
     public DcMotor right_wheel = null;
     public DcMotor carousel = null;
     public DcMotor crane_arm = null;
@@ -19,7 +17,7 @@ public class mantisesClass{
     public final static double max_claw = 0.4;
     public final static double min_claw = 0.001;
     public final static double min_arm = 1;
-    public final static double max_arm = 320;
+    public final static double max_arm = 365;
 
     private static final DcMotor.RunMode encoder_true = DcMotor.RunMode.RUN_USING_ENCODER;
     private static final DcMotor.RunMode encoder_false = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
@@ -28,11 +26,11 @@ public class mantisesClass{
     private static final DcMotor.Direction direction_reverse = DcMotor.Direction.REVERSE;
     public mantisesClass(LinearOpMode opMode){
         op = opMode;
-        left_wheel = opMode.hardwareMap.dcMotor.get("left_motor");
-        right_wheel = opMode.hardwareMap.dcMotor.get("right_motor");
-        carousel = opMode.hardwareMap.dcMotor.get("carousel_arm");
-        crane_arm = opMode.hardwareMap.dcMotor.get("crane_arm");
-        crane_claw = opMode.hardwareMap.servo.get("claw_arm");
+        left_wheel = op.hardwareMap.dcMotor.get("left_motor");
+        right_wheel = op.hardwareMap.dcMotor.get("right_motor");
+        carousel = op.hardwareMap.dcMotor.get("carousel_arm");
+        crane_arm = op.hardwareMap.dcMotor.get("crane_arm");
+        crane_claw = op.hardwareMap.servo.get("claw_arm");
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         left_wheel.setDirection(direction_reverse);
@@ -93,7 +91,7 @@ public class mantisesClass{
         right_wheel.setPower(0.5);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        checkIfChassisBusy();
+
 
 
 
@@ -118,7 +116,7 @@ public class mantisesClass{
         right_wheel.setPower(0.5);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        checkIfChassisBusy();
+
 
 
     }
@@ -130,14 +128,14 @@ public class mantisesClass{
         right_wheel.setPower(0.5);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        checkIfChassisBusy();
+
 
     }
     public void runCraneArm(int targetPosition, double power){
         crane_arm.setTargetPosition(targetPosition);
         crane_arm.setPower(power);
         crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        checkIfCraneArmBusy();
+
     }
 
     public int getPos(DcMotor dcMotor){
