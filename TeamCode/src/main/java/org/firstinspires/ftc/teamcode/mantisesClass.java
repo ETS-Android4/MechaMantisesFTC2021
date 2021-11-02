@@ -26,11 +26,11 @@ public class mantisesClass{
     private static final DcMotor.Direction direction_reverse = DcMotor.Direction.REVERSE;
     public mantisesClass(LinearOpMode opMode){
         op = opMode;
-        left_wheel = op.hardwareMap.dcMotor.get("left_motor");
-        right_wheel = op.hardwareMap.dcMotor.get("right_motor");
-        carousel = op.hardwareMap.dcMotor.get("carousel_arm");
-        crane_arm = op.hardwareMap.dcMotor.get("crane_arm");
-        crane_claw = op.hardwareMap.servo.get("claw_arm");
+        left_wheel = opMode.hardwareMap.get(DcMotor.class, "left_motor");
+        right_wheel = opMode.hardwareMap.get(DcMotor.class,"right_motor");
+        carousel = opMode.hardwareMap.get(DcMotor.class, "carousel_arm");
+        crane_arm = opMode.hardwareMap.get(DcMotor.class, "crane_arm");
+        crane_claw = opMode.hardwareMap.get(Servo.class, "claw_arm");
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         left_wheel.setDirection(direction_reverse);
@@ -52,7 +52,7 @@ public class mantisesClass{
         left_wheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right_wheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        crane_arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        crane_arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         left_wheel.setPower(0);
         right_wheel.setPower(0);
@@ -91,6 +91,7 @@ public class mantisesClass{
         right_wheel.setPower(0.5);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        checkIfChassisBusy();
 
 
 
@@ -116,6 +117,7 @@ public class mantisesClass{
         right_wheel.setPower(0.5);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        checkIfChassisBusy();
 
 
 
@@ -128,6 +130,7 @@ public class mantisesClass{
         right_wheel.setPower(0.5);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        checkIfChassisBusy();
 
 
     }
@@ -135,6 +138,7 @@ public class mantisesClass{
         crane_arm.setTargetPosition(targetPosition);
         crane_arm.setPower(power);
         crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        checkIfCraneArmBusy();
 
     }
 
@@ -157,6 +161,7 @@ public class mantisesClass{
         carousel.setTargetPosition(1440*5);
         carousel.setPower(1);
         carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        checkIfCarouselIsBusy();
     }
     public void checkIfCarouselIsBusy(){
         while (carousel.isBusy()){

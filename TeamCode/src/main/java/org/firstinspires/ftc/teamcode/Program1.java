@@ -7,40 +7,43 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class Program1 extends LinearOpMode {
 
-    mantisesClass mantisClass = new mantisesClass(this);
+
 
 
 
     @Override
     public void runOpMode(){
+        mantisesClass mantisClass = new mantisesClass(this);
+
         waitForStart();
+
         mantisClass.resetChassisEncoders();
         mantisClass.setCraneClawPos(0.4);
         mantisClass.runCraneArm(350, 0.1);
-        mantisClass.checkIfCraneArmBusy();
+        //mantisClass.checkIfCraneArmBusy();
         mantisClass.runToPosition(8, "forward");
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.turnLeft(35);
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.runToPosition(30, "forward");
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.setCraneClawPos(0);
         mantisClass.runToPosition(18, "backward");
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.turnLeft(45);
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.runToPosition(30, "backward");
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.turnRight(75);
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.runToPosition(20, "backward");
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.runCarousel();
-        mantisClass.checkIfCarouselIsBusy();
+        //mantisClass.checkIfCarouselIsBusy();
         mantisClass.runToPosition(20, "forward");
-        mantisClass.checkIfChassisBusy();
+        //mantisClass.checkIfChassisBusy();
         mantisClass.runCraneArm(0, 0.1);
-        mantisClass.checkIfCraneArmBusy();
+        //mantisClass.checkIfCraneArmBusy();
         stop();
     }
 }
