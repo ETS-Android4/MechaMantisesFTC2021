@@ -29,9 +29,12 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -49,7 +52,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "TensorFlowTest", group = "Concept")
+@Autonomous(name = "TensorFlow")
+//@Disabled
 public class TensorFlowTest extends LinearOpMode {
     /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
      * the following 4 detectable objects
@@ -64,6 +68,7 @@ public class TensorFlowTest extends LinearOpMode {
      */
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
+
             "Duck",
             "Marker"
     };
@@ -117,37 +122,79 @@ public class TensorFlowTest extends LinearOpMode {
             // (typically 16/9).
             tfod.setZoom(2.5, 16.0/9.0);
         }
+        mantisesClass mantis  = new mantisesClass(this);
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
         waitForStart();
+        boolean x = false;
 
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                        telemetry.addData("# Object Detected", updatedRecognitions.size());
 
-                        // step through the list of recognitions and display boundary info.
-                        int i = 0;
-                        for (Recognition recognition : updatedRecognitions) {
-                            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                    recognition.getLeft(), recognition.getTop());
-                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                    recognition.getRight(), recognition.getBottom());
-                            i++;
+
+        if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    //telemetry.addData("# Object Detected", updatedRecognitions.size());
+
+                    // step through the list of recognitions and display boundary info.
+
+                    for (Recognition recognition : updatedRecognitions) {
+                        if (recognition.getLabel().equals("Duck")) {
+                            x = true;
+                        } else {
+
+
                         }
-                        telemetry.update();
+
+
                     }
+
                 }
             }
+        telemetry.addData("X", x);
+        telemetry.update();
+        if (x){
+            mantis.setCraneClawPos(0.4);
+            mantis.runCraneArm(345, 0.1);
+            mantis.runDistance(8, "forward", 0.5);
+            mantis.turnLeft(30, 0.3);
+            mantis.runDistance(15, "forward", 0.5);
+            mantis.runDistance(9, "forward", 0.2);
+            mantis.setCraneClawPos(0);
+            mantis.runDistance(18, "backward", 0.5);
+            mantis.turnLeft(40, 0.3);
+            mantis.runDistance(25, "backward", 0.5);
+            mantis.turnRight(75, 0.3);
+            mantis.runDistance(12, "backward", 0.5);
+            mantis.runCarousel();
+            mantis.runDistance(19, "forward", 0.5);
+            mantis.runCraneArm(0, 0.1);
+
+
+        }else{
+            mantis.setCraneClawPos(0.4);
+            mantis.runCraneArm(245, 0.1);
+            mantis.runDistance(8, "forward", 0.5);
+            mantis.turnLeft(30, 0.3);
+            mantis.runDistance(15, "forward", 0.5);
+            mantis.runDistance(9, "forward", 0.2);
+            mantis.setCraneClawPos(0);
+            mantis.runDistance(18, "backward", 0.5);
+            mantis.turnLeft(40, 0.3);
+            mantis.runDistance(25, "backward", 0.5);
+            mantis.turnRight(75, 0.3);
+            mantis.runDistance(12, "backward", 0.5);
+            mantis.runCarousel();
+            mantis.runDistance(19, "forward", 0.5);
+            mantis.runCraneArm(0, 0.1);
         }
-    }
+        stop();
+        }
+
+
 
     /**
      * Initialize the Vuforia localization engine.

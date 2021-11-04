@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 @Autonomous(name = "AutonomousBlue", group = "Linear Opmode")
 
 public class Program1 extends LinearOpMode {
@@ -15,35 +19,29 @@ public class Program1 extends LinearOpMode {
     public void runOpMode(){
         mantisesClass mantisClass = new mantisesClass(this);
 
+
         waitForStart();
 
-        mantisClass.resetChassisEncoders();
+
+//            mantisClass.turnLeftGyro(90, 0.1);
+
         mantisClass.setCraneClawPos(0.4);
-        mantisClass.runCraneArm(350, 0.1);
-        //mantisClass.checkIfCraneArmBusy();
-        mantisClass.runToPosition(8, "forward");
-        //mantisClass.checkIfChassisBusy();
-        mantisClass.turnLeft(35);
-        //mantisClass.checkIfChassisBusy();
-        mantisClass.runToPosition(30, "forward");
-        //mantisClass.checkIfChassisBusy();
+        mantisClass.runCraneArm(345, 0.1);
+        mantisClass.runDistance(8, "forward", 0.5);
+        mantisClass.turnLeft(30, 0.3);
+        mantisClass.runDistance(20, "forward", 0.5);
+        mantisClass.runDistance(9, "forward", 0.2);
         mantisClass.setCraneClawPos(0);
-        mantisClass.runToPosition(18, "backward");
-        //mantisClass.checkIfChassisBusy();
-        mantisClass.turnLeft(45);
-        //mantisClass.checkIfChassisBusy();
-        mantisClass.runToPosition(30, "backward");
-        //mantisClass.checkIfChassisBusy();
-        mantisClass.turnRight(75);
-        //mantisClass.checkIfChassisBusy();
-        mantisClass.runToPosition(20, "backward");
-        //mantisClass.checkIfChassisBusy();
+        mantisClass.runDistance(18, "backward", 0.5);
+        mantisClass.turnLeft(45, 0.3);
+        mantisClass.runDistance(30, "backward", 0.5);
+        mantisClass.turnRight(75, 0.3);
+        mantisClass.runDistance(20, "backward", 0.5);
         mantisClass.runCarousel();
-        //mantisClass.checkIfCarouselIsBusy();
-        mantisClass.runToPosition(20, "forward");
-        //mantisClass.checkIfChassisBusy();
+        mantisClass.runDistance(23, "forward", 0.5);
         mantisClass.runCraneArm(0, 0.1);
-        //mantisClass.checkIfCraneArmBusy();
         stop();
+
+
     }
 }
