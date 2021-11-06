@@ -12,34 +12,36 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class mantisesClass{
+public class MantisesClass {
     LinearOpMode op = null;
     public DcMotor left_wheel;
     public DcMotor right_wheel = null;
     public DcMotor carousel = null;
     public DcMotor crane_arm = null;
     public Servo crane_claw = null;
+    public Servo camera = null;
     public BNO055IMU imu = null;
     public Orientation orientation;
     public double startPosition = 0.0;
     public final static double speed = 0.001;
     public final static double max_claw = 0.4;
     public final static double min_claw = 0.001;
-    public final static double min_arm = 1;
-    public final static double max_arm = 365;
+    public final static int min_arm = 1;
+    public final static int max_arm = 390;
 
     private static final DcMotor.RunMode encoder_true = DcMotor.RunMode.RUN_USING_ENCODER;
     private static final DcMotor.RunMode encoder_false = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     private static final DcMotor.RunMode reset_encoder = DcMotor.RunMode.STOP_AND_RESET_ENCODER;
     private static final DcMotor.Direction direction_forward = DcMotor.Direction.FORWARD;
     private static final DcMotor.Direction direction_reverse = DcMotor.Direction.REVERSE;
-    public mantisesClass(LinearOpMode opMode){
+    public MantisesClass(LinearOpMode opMode){
         op = opMode;
         left_wheel = opMode.hardwareMap.get(DcMotor.class, "left_motor");
         right_wheel = opMode.hardwareMap.get(DcMotor.class,"right_motor");
         carousel = opMode.hardwareMap.get(DcMotor.class, "carousel_arm");
         crane_arm = opMode.hardwareMap.get(DcMotor.class, "crane_arm");
         crane_claw = opMode.hardwareMap.get(Servo.class, "claw_arm");
+        camera = opMode.hardwareMap.get(Servo.class, "camera");
         imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
 
         imu.initialize(new BNO055IMU.Parameters());
@@ -62,6 +64,7 @@ public class mantisesClass{
         crane_arm.setMode(encoder_true);
 
         crane_claw.setPosition(startPosition);
+
 
         left_wheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right_wheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -130,7 +133,7 @@ public class mantisesClass{
         double circumfrence = 3.14*4.001;
         double rotationsNeeded = inches/circumfrence;
         int drivingTarget = (int) (rotationsNeeded*MOTOR_TICK_COUNT);
-        if(direction == "backward"){
+        if(direction.equals("backward")){
             drivingTarget = drivingTarget*-1;
         }else{
             drivingTarget = drivingTarget*1;
@@ -150,6 +153,22 @@ public class mantisesClass{
 
 
     }
+    public void stopMotor(){
+        double left_power = left_wheel.getPower();
+        double right_power = right_wheel.getPower();
+        while(left_power>0.1||right_power>0.1){
+            if(left_power>0.1) {
+                left_power-=0.1;
+            }
+            if(right_power>0.1) {
+                right_power-=0.1;
+            }
+            left_wheel.setPower(left_power);
+            right_wheel.setPower(right_power);
+        }
+        stopChassis();
+    }
+
     public void stopChassis(){
         left_wheel.setPower(0);
         right_wheel.setPower(0);
@@ -199,6 +218,12 @@ public class mantisesClass{
 
     }
     public void runCraneArm(int targetPosition, double power){
+        if(targetPosition> max_arm){
+            targetPosition = max_arm;
+        }
+        if(targetPosition< min_arm){
+            targetPosition = min_arm;
+        }
         crane_arm.setTargetPosition(targetPosition);
         crane_arm.setPower(power);
         crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -215,6 +240,14 @@ public class mantisesClass{
     }
 
     public void setCraneClawPos(double targetPos) {
+        if(targetPos>max_claw){
+            targetPos = max_claw;
+
+        }
+        if (targetPos<min_claw) {
+            targetPos = min_claw;
+
+        }
 
         crane_claw.setPosition(targetPos);
 

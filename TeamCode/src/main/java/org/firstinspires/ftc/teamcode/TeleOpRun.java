@@ -3,7 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp(name = "TeleOp!")
-public class teleOp extends LinearOpMode {
+public class TeleOpRun extends LinearOpMode {
     public void runOpMode(){
         int rotations = 0;
         boolean claw_close;
@@ -19,7 +19,7 @@ public class teleOp extends LinearOpMode {
         boolean backward;
         boolean left_turn;
         boolean right_turn;
-        mantisesClass mantisClass = new mantisesClass(this); //this does the init
+        MantisesClass mantisClass = new MantisesClass(this); //this does the init
 
         while (!opModeIsActive() && !isStopRequested()) {//you can just use waitForStart() here, but this prints stuff out, you guys don't have this so it would be running while you have not hit the start button which is illegal
             telemetry.addData("status", "waiting for start command...");
@@ -33,8 +33,8 @@ public class teleOp extends LinearOpMode {
             carousel_forward = gamepad1.left_bumper;
             carousel_stop = gamepad1.right_bumper;
             carousel_reverse = gamepad1.start;
-            arm_up = gamepad1.y&&rotations<365;
-            arm_down = gamepad1.a&&rotations>0;
+            arm_up = gamepad1.y&&rotations<mantisClass.max_arm;
+            arm_down = gamepad1.a&&rotations>mantisClass.min_arm;
             forward = gamepad1.dpad_up;
             backward = gamepad1.dpad_down;
             left_turn = gamepad1.dpad_left;
