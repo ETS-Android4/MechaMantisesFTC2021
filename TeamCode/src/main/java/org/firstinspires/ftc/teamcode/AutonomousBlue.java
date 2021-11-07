@@ -1,31 +1,3 @@
-/* Copyright (c) 2019 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
 package org.firstinspires.ftc.teamcode;
 
@@ -39,48 +11,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-/**
- * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
- * determine the position of the Freight Frenzy game elements.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
- */
+
 @Autonomous(name = "AutonomousBlue", group = "Concept")
 //@Disabled
 public class AutonomousBlue extends LinearOpMode {
-    /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
-     * the following 4 detectable objects
-     *  0: Ball,
-     *  1: Cube,
-     *  2: Duck,
-     *  3: Marker (duck location tape marker)
-     *
-     *  Two additional model assets are available which only contain a subset of the objects:
-     *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
-     *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
-     */
+
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
             "Duck",
             "Marker"
     };
 
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
+
     private static final String VUFORIA_KEY =
             "AckJVyv/////AAABmVTYhXy+2kKblacQ/Kj23axJUG1tC4BGaCJHvXW9RO9dIdeQxmVRyLL70kcUjvC2eNt3nxcokoC4d+E0H4N+ah4PAaqkxk1q20takUJ3ILjj19Md6iMYrSToAoRXP0mF1GbB7zSECEXduXe2bs08F9qekY4M0QoTHXeSiaCHo2X8TfA0NsvqSE9nBGgVJi3hUGe/h+/ug5MUAmZsbWKQMQNCpG3E/Lu44sbeet4rs2AimQITW33KXR3t99OEmYYfkjKa+jAl3yvbq1zuNVGauURIX9wlvueS5mRuk4tkN3Ax5O+67wuL+UoGNmoXS3Fb1X/ur4ZdX+FaWd03aBjKN+MVTUYDZqnVfgZpXenUV9sg";
 
@@ -95,9 +37,12 @@ public class AutonomousBlue extends LinearOpMode {
      * Detection engine.
      */
     private TFObjectDetector tfod;
+    //private int craneArmPos = 0;
 
     @Override
     public void runOpMode() {
+        telemetry.addData("Initializing", "DO NOT START OPMODE!");
+        telemetry.update();
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -120,11 +65,12 @@ public class AutonomousBlue extends LinearOpMode {
         }
 
         /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start op mode");
+        telemetry.addData("Ready To Start OpMode", "Press The Start Button To Start!");
         telemetry.update();
         MantisesClass mantis = new MantisesClass(this);
         waitForStart();
-        sleep(2000);
+        mantis.runDistance(1,"forward", 0.2);
+        sleep(1000);
 
 
                 if (tfod != null) {
@@ -133,84 +79,81 @@ public class AutonomousBlue extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        sleep(2000);
+                        sleep(1000);
                         // step through the list of recognitions and display boundary info.
                         //int i = 0;
                         int location = 0;
                         for (Recognition recognition : updatedRecognitions) {
                             if(recognition.getLabel().equals("Duck")){
-                                if (recognition.getLeft()>0&&recognition.getLeft()<350){
-                                    location = 0;
-
-                                }else if(recognition.getLeft()>350&&recognition.getLeft()<750){
+                                if(recognition.getLeft()>350&&recognition.getLeft()<750){
                                     location = 1;
                                 }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
                                     location = 2;
                                 }
+                                else{
+                                    location = 0;
+                                }
                             }
-//                            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-//                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-//                                    recognition.getLeft(), recognition.getTop());
-//                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-//                                    recognition.getRight(), recognition.getBottom());
-//                            i++;
                         }
                         telemetry.addData("Location", location);
                         telemetry.update();
                         sleep(2000);
                         if(location == 0){
-                            mantis.setCraneClawPos(0.4);
-                            mantis.runCraneArm(400, 0.1);
-                           // sleep(10000);
-                            mantis.runDistance(8, "forward", 0.5);
-                            mantis.turnLeft(30, 0.3);
-                            mantis.runDistance(15, "forward", 0.5);
-                            mantis.runDistance(10, "forward", 0.2);
-                            mantis.setCraneClawPos(0);
-                            mantis.runDistance(18, "backward", 0.5);
-                            mantis.turnLeft(40, 0.3);
-                            mantis.runDistance(25, "backward", 0.5);
-                            mantis.turnRight(75, 0.3);
-                            mantis.runDistance(13, "backward", 0.5);
-                            mantis.runCarousel();
-                            mantis.runDistance(21, "forward", 0.5);
-                            mantis.runCraneArm(0, 0.1);
+                            AutonomousRun(mantis, 400);
+//                            mantis.setCraneClawPos(0.4);
+//                            mantis.runCraneArm(400, 0.1);
+//                           // sleep(10000);
+//                            mantis.runDistance(8, "forward", 0.5);
+//                            mantis.turnLeft(30, 0.3);
+//                            mantis.runDistance(15, "forward", 0.5);
+//                            mantis.runDistance(10, "forward", 0.2);
+//                            mantis.setCraneClawPos(0);
+//                            mantis.runDistance(18, "backward", 0.5);
+//                            mantis.turnLeft(40, 0.3);
+//                            mantis.runDistance(25, "backward", 0.5);
+//                            mantis.turnRight(75, 0.3);
+//                            mantis.runDistance(13, "backward", 0.5);
+//                            mantis.runCarousel();
+//                            mantis.runDistance(21, "forward", 0.5);
+//                            mantis.runCraneArm(0, 0.1);
+
                         }else if(location == 1){
-                            mantis.setCraneClawPos(0.4);
-                            mantis.runCraneArm(250, 0.1);
-                           // sleep(10000);
-                            mantis.runDistance(8, "forward", 0.5);
-                            mantis.turnLeft(30, 0.3);
-                            mantis.runDistance(15, "forward", 0.5);
-                            mantis.runDistance(10, "forward", 0.2);
-                            mantis.setCraneClawPos(0);
-                            mantis.runDistance(18, "backward", 0.5);
-                            mantis.turnLeft(40, 0.3);
-                            mantis.runDistance(25, "backward", 0.5);
-                            mantis.turnRight(75, 0.3);
-                            mantis.runDistance(13, "backward", 0.5);
-                            mantis.runCarousel();
-                            mantis.runDistance(21, "forward", 0.5);
-                            mantis.runCraneArm(0, 0.1);
+                            AutonomousRun(mantis, 250);
+
+//                            mantis.setCraneClawPos(0.4);
+//                            mantis.runCraneArm(250, 0.1);
+//                           // sleep(10000);
+//                            mantis.runDistance(8, "forward", 0.5);
+//                            mantis.turnLeft(30, 0.3);
+//                            mantis.runDistance(15, "forward", 0.5);
+//                            mantis.runDistance(10, "forward", 0.2);
+//                            mantis.setCraneClawPos(0);
+//                            mantis.runDistance(18, "backward", 0.5);
+//                            mantis.turnLeft(40, 0.3);
+//                            mantis.runDistance(25, "backward", 0.5);
+//                            mantis.turnRight(75, 0.3);
+//                            mantis.runDistance(13, "backward", 0.5);
+//                            mantis.runCarousel();
+//                            mantis.runDistance(21, "forward", 0.5);
+//                            mantis.runCraneArm(0, 0.1);
                         }else if(location == 2){
-                            mantis.setCraneClawPos(0.4);
-                            mantis.runCraneArm(100, 0.1);
-                           // sleep(10000);
-                            mantis.runDistance(8, "forward", 0.5);
-                            mantis.turnLeft(30, 0.3);
-                            mantis.runDistance(15, "forward", 0.5);
-                            mantis.runDistance(10, "forward", 0.2);
-                            mantis.setCraneClawPos(0);
-                            mantis.runDistance(18, "backward", 0.5);
-                            mantis.turnLeft(40, 0.3);
-                            mantis.runDistance(25, "backward", 0.5);
-                            mantis.turnRight(75, 0.3);
-                            mantis.runDistance(13, "backward", 0.5);
-                            mantis.runCarousel();
-                            mantis.runDistance(21, "forward", 0.5);
-                            mantis.runCraneArm(0, 0.1);
-                        }else{
-                            
+                            AutonomousRun(mantis, 100);
+//                            mantis.setCraneClawPos(0.4);
+//                            mantis.runCraneArm(100, 0.1);
+//                           // sleep(10000);
+//                            mantis.runDistance(8, "forward", 0.5);
+//                            mantis.turnLeft(30, 0.3);
+//                            mantis.runDistance(15, "forward", 0.5);
+//                            mantis.runDistance(10, "forward", 0.2);
+//                            mantis.setCraneClawPos(0);
+//                            mantis.runDistance(18, "backward", 0.5);
+//                            mantis.turnLeft(40, 0.3);
+//                            mantis.runDistance(25, "backward", 0.5);
+//                            mantis.turnRight(75, 0.3);
+//                            mantis.runDistance(13, "backward", 0.5);
+//                            mantis.runCarousel();
+//                            mantis.runDistance(21, "forward", 0.5);
+//                            mantis.runCraneArm(0, 0.1);
                         }
 
                     }
@@ -250,5 +193,38 @@ public class AutonomousBlue extends LinearOpMode {
         tfodParameters.inputSize = 320;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
+    }
+    private void AutonomousRun(MantisesClass mantis, int craneArmPos){
+//        mantis.setCraneClawPos(0.4);
+//        mantis.runCraneArm(craneArmPos, 0.1);
+//        mantis.runDistance(12, "forward", 0.5);
+//        mantis.turnLeft(65, 0.3);
+//        mantis.runDistance(23, "forward", 0.5);
+//        mantis.turnRight(65, 0.3);
+//        mantis.runDistance(10,"forward", 0.5);
+//        mantis.runDistance(3,"forward" ,0.2);
+//        mantis.setCraneClawPos(0.0);
+//        mantis.runDistance(15, "backward", 0.5);
+//        mantis.turnLeft(65, 0.3);
+//        mantis.runDistance(35, "backward", 1);
+//        mantis.runDistance(10, "backward", 0.3);
+
+
+        mantis.setCraneClawPos(0.4);
+        mantis.runCraneArm(craneArmPos, 0.1);
+        // sleep(10000);
+        mantis.runDistance(7, "forward", 0.5);
+        mantis.turnLeft(30, 0.3);
+        mantis.runDistance(15, "forward", 0.5);
+        mantis.runDistance(10, "forward", 0.2);
+        mantis.setCraneClawPos(0);
+        mantis.runDistance(18, "backward", 0.5);
+        mantis.turnLeft(40, 0.3);
+        mantis.runDistance(25, "backward", 0.5);
+        mantis.turnRight(75, 0.3);
+        mantis.runDistance(13, "backward", 0.5);
+        mantis.runCarousel();
+        mantis.runDistance(21, "forward", 0.5);
+        mantis.runCraneArm(0, 0.1);
     }
 }
