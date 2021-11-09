@@ -41,6 +41,7 @@ public class AutonomousBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        MantisesClass mantis = new MantisesClass(this);
         telemetry.addData("Initializing", "DO NOT START OPMODE!");
         telemetry.update();
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
@@ -65,12 +66,13 @@ public class AutonomousBlue extends LinearOpMode {
         }
 
         /** Wait for the game to begin */
+
         telemetry.addData("Ready To Start OpMode", "Press The Start Button To Start!");
         telemetry.update();
-        MantisesClass mantis = new MantisesClass(this);
+
         waitForStart();
-        mantis.runDistance(1,"forward", 0.2);
-        sleep(1000);
+       // mantis.runDistance(1,"forward", 0.2);
+        sleep(500);
 
 
                 if (tfod != null) {
@@ -97,28 +99,28 @@ public class AutonomousBlue extends LinearOpMode {
                         }
                         telemetry.addData("Location", location);
                         telemetry.update();
-                        sleep(2000);
+                        //sleep(1000);
                         if(location == 0){
-                            AutonomousRun(mantis, 400);
-//                            mantis.setCraneClawPos(0.4);
-//                            mantis.runCraneArm(400, 0.1);
-//                           // sleep(10000);
-//                            mantis.runDistance(8, "forward", 0.5);
-//                            mantis.turnLeft(30, 0.3);
-//                            mantis.runDistance(15, "forward", 0.5);
-//                            mantis.runDistance(10, "forward", 0.2);
-//                            mantis.setCraneClawPos(0);
-//                            mantis.runDistance(18, "backward", 0.5);
-//                            mantis.turnLeft(40, 0.3);
-//                            mantis.runDistance(25, "backward", 0.5);
-//                            mantis.turnRight(75, 0.3);
-//                            mantis.runDistance(13, "backward", 0.5);
-//                            mantis.runCarousel();
-//                            mantis.runDistance(21, "forward", 0.5);
-//                            mantis.runCraneArm(0, 0.1);
+                            mantis.setCraneClawPos(0.4);
+                            mantis.runCraneArm(400, 0.1);
+                            // sleep(10000);
+                            mantis.runDistance(7, "forward", 0.5);
+                            mantis.turnLeft(40, 0.3);
+                            mantis.runDistance(15, "forward", 0.5);
+                            mantis.runDistance(14, "forward", 0.2);
+                            mantis.setCraneClawPos(0);
+                            mantis.runDistance(22, "backward", 0.5);
+                            mantis.turnLeft(55, 0.3);
+                            mantis.runDistance(26, "backward", 0.5);
+                            mantis.turnRight(90, 0.3);
+                            mantis.runDistance(13, "backward", 0.5);
+                            mantis.runDistance(5, "backward", 0.2);
+                            mantis.runCarousel();
+                            mantis.runDistance(21, "forward", 0.5);
+                            mantis.runCraneArm(0, 0.3);
 
                         }else if(location == 1){
-                            AutonomousRun(mantis, 250);
+                            AutonomousRun(mantis, 275, 0);
 
 //                            mantis.setCraneClawPos(0.4);
 //                            mantis.runCraneArm(250, 0.1);
@@ -137,7 +139,7 @@ public class AutonomousBlue extends LinearOpMode {
 //                            mantis.runDistance(21, "forward", 0.5);
 //                            mantis.runCraneArm(0, 0.1);
                         }else if(location == 2){
-                            AutonomousRun(mantis, 100);
+                            AutonomousRun(mantis, 100, 0);
 //                            mantis.setCraneClawPos(0.4);
 //                            mantis.runCraneArm(100, 0.1);
 //                           // sleep(10000);
@@ -194,37 +196,41 @@ public class AutonomousBlue extends LinearOpMode {
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
-    private void AutonomousRun(MantisesClass mantis, int craneArmPos){
+    private void AutonomousRun(MantisesClass mantis, int craneArmPos, int offset){
 //        mantis.setCraneClawPos(0.4);
 //        mantis.runCraneArm(craneArmPos, 0.1);
-//        mantis.runDistance(12, "forward", 0.5);
-//        mantis.turnLeft(65, 0.3);
-//        mantis.runDistance(23, "forward", 0.5);
-//        mantis.turnRight(65, 0.3);
-//        mantis.runDistance(10,"forward", 0.5);
+//        mantis.runDistance(13, "forward", 0.75);
+//        mantis.turnLeft(90, 0.3);
+//        mantis.runDistance(25, "forward", 0.75);
+//        mantis.turnRight(97, 0.3);
+//        mantis.runDistance(9+offset,"forward", .75);
 //        mantis.runDistance(3,"forward" ,0.2);
 //        mantis.setCraneClawPos(0.0);
-//        mantis.runDistance(15, "backward", 0.5);
-//        mantis.turnLeft(65, 0.3);
+//        mantis.runDistance(12+offset, "backward", 0.75);
+//        mantis.turnLeft(95, 0.3);
 //        mantis.runDistance(35, "backward", 1);
-//        mantis.runDistance(10, "backward", 0.3);
+//        sleep(100);
+//        mantis.runDistance(10, "backward", 0.2);
+//        mantis.turnRight(90, 0.3);
+
 
 
         mantis.setCraneClawPos(0.4);
         mantis.runCraneArm(craneArmPos, 0.1);
         // sleep(10000);
         mantis.runDistance(7, "forward", 0.5);
-        mantis.turnLeft(30, 0.3);
-        mantis.runDistance(15, "forward", 0.5);
-        mantis.runDistance(10, "forward", 0.2);
-        mantis.setCraneClawPos(0);
-        mantis.runDistance(18, "backward", 0.5);
         mantis.turnLeft(40, 0.3);
-        mantis.runDistance(25, "backward", 0.5);
-        mantis.turnRight(75, 0.3);
+        mantis.runDistance(15, "forward", 0.5);
+        mantis.runDistance(10+offset, "forward", 0.2);
+        mantis.setCraneClawPos(0);
+        mantis.runDistance(18+offset, "backward", 0.5);
+        mantis.turnLeft(55, 0.3);
+        mantis.runDistance(26, "backward", 0.5);
+        mantis.turnRight(90, 0.3);
         mantis.runDistance(13, "backward", 0.5);
+        mantis.runDistance(5, "backward", 0.2);
         mantis.runCarousel();
         mantis.runDistance(21, "forward", 0.5);
-        mantis.runCraneArm(0, 0.1);
+        mantis.runCraneArm(0, 0.3);
     }
 }

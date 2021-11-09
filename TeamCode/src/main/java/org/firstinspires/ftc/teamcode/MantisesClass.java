@@ -138,9 +138,11 @@ public class MantisesClass {
         }else{
             drivingTarget = drivingTarget*1;
         }
-        resetChassisEncoders();
-        left_wheel.setTargetPosition(drivingTarget);
-        right_wheel.setTargetPosition(drivingTarget);
+        int leftDrivingTarget = left_wheel.getCurrentPosition()+drivingTarget;
+        int rightDrivingTarget = right_wheel.getCurrentPosition()+drivingTarget;
+        //resetChassisEncoders();
+        left_wheel.setTargetPosition(leftDrivingTarget);
+        right_wheel.setTargetPosition(rightDrivingTarget);
         left_wheel.setPower(power);
         right_wheel.setPower(power);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -148,6 +150,7 @@ public class MantisesClass {
         waitIfChassisBusy();
         op.sleep(100);
         stopChassis();
+
 
 
 
@@ -187,10 +190,17 @@ public class MantisesClass {
 
         }
     }
-    public void turnLeft(int degrees, double power){
-        resetChassisEncoders();
-        left_wheel.setTargetPosition(-(degrees*14));
-        right_wheel.setTargetPosition(degrees*14);
+    public void turnLeft(double degrees, double power){
+        //resetChassisEncoders();
+        degrees = degrees * 0.09111111111;
+        int MOTOR_TICK_COUNT = 1440;
+        double circumfrence = 3.14*4.001;
+        double rotationsNeeded = degrees/circumfrence;
+        int drivingTarget = (int) (rotationsNeeded*MOTOR_TICK_COUNT);
+        int leftDrivingTarget = left_wheel.getCurrentPosition()-drivingTarget;
+        int rightDrivingTarget = right_wheel.getCurrentPosition()+drivingTarget;
+        left_wheel.setTargetPosition(leftDrivingTarget);
+        right_wheel.setTargetPosition(rightDrivingTarget);
         left_wheel.setPower(power);
         right_wheel.setPower(power);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -203,10 +213,17 @@ public class MantisesClass {
 
 
     }
-    public void turnRight(int degrees, double power){
-        resetChassisEncoders();
-        left_wheel.setTargetPosition(degrees*13);
-        right_wheel.setTargetPosition(-(degrees*13));
+    public void turnRight(double degrees, double power){
+        //resetChassisEncoders();
+        degrees = degrees * 0.09111111111;
+        int MOTOR_TICK_COUNT = 1440;
+        double circumfrence = 3.14*4.001;
+        double rotationsNeeded = degrees/circumfrence;
+        int drivingTarget = (int) (rotationsNeeded*MOTOR_TICK_COUNT);
+        int leftDrivingTarget = left_wheel.getCurrentPosition()+drivingTarget;
+        int rightDrivingTarget = right_wheel.getCurrentPosition()-drivingTarget;
+        left_wheel.setTargetPosition(leftDrivingTarget);
+        right_wheel.setTargetPosition(rightDrivingTarget);
         left_wheel.setPower(power);
         right_wheel.setPower(power);
         left_wheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -255,7 +272,7 @@ public class MantisesClass {
 
     }
     public void runCarousel(){
-        carousel.setTargetPosition(1440*5);
+        carousel.setTargetPosition(1480*5);
         carousel.setPower(1);
         carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         waitIfCarouselIsBusy();
