@@ -12,6 +12,8 @@ public class TeleOpRun extends LinearOpMode {
         double right;
         boolean arm_up;
         boolean arm_down;
+        boolean arm_middle;
+        boolean arm_off;
         boolean carousel_forward;
         boolean carousel_stop;
         boolean carousel_reverse;
@@ -33,8 +35,10 @@ public class TeleOpRun extends LinearOpMode {
             carousel_forward = gamepad1.left_bumper;
             carousel_stop = gamepad1.right_bumper;
             carousel_reverse = gamepad1.start;
-            arm_up = gamepad1.y&&rotations<mantisClass.max_arm;
-            arm_down = gamepad1.a&&rotations>mantisClass.min_arm;
+            arm_up = gamepad2.y/*&&rotations<mantisClass.max_arm*/;
+            arm_down = gamepad2.a/*&&rotations>mantisClass.min_arm*/;
+            arm_middle = gamepad2.x;
+            arm_off = gamepad2.b;
             forward = gamepad1.dpad_up;
             backward = gamepad1.dpad_down;
             left_turn = gamepad1.dpad_left;
@@ -71,21 +75,41 @@ public class TeleOpRun extends LinearOpMode {
                 mantisClass.right_wheel.setPower(right);
             }
             if (arm_up){
+                mantisClass.crane_arm.setTargetPosition(400);
+                mantisClass.crane_arm.setPower(0.1);
+                mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                if(rotations <365){
 //                    rotations+=1;
 //                }
-                mantisClass.crane_arm.setTargetPosition(rotations+=1);
+//                mantisClass.crane_arm.setTargetPosition(rotations+=1);
+//                mantisClass.crane_arm.setPower(0.1);
+//                mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+               // mantisClass.runCraneArm(400, 0.1);
+
+            }else if (arm_down){
+                mantisClass.crane_arm.setTargetPosition(100);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }else if (arm_down){
 //                if (rotations > 0) {
 //                    rotations -= 1;
 //                }
-                mantisClass.crane_arm.setTargetPosition(rotations-=1);
+//                mantisClass.crane_arm.setTargetPosition(rotations-=1);
+//                mantisClass.crane_arm.setPower(0.1);
+//                mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+               // mantisClass.runCraneArm(100, 0.1);
+            }else if(arm_middle) {
+                mantisClass.crane_arm.setTargetPosition(275);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }else {
+                //mantisClass.runCraneArm(275, 0.1);
+            }
+            else if(arm_off){
+                mantisClass.crane_arm.setTargetPosition(0);
+                mantisClass.crane_arm.setPower(0.1);
+                mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+//                mantisClass.runCraneArm(0, 0.1);
+//                mantisClass.crane_arm.setPower(0);
             }
             if (carousel_forward){
                 mantisClass.carousel.setPower(1);

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -11,9 +12,9 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 
-@Autonomous(name = "AutonomousBlue", group = "Concept")
+@Autonomous(name = "AutonomousBlue3", group = "Concept")
 //@Disabled
-public class AutonomousBlue extends LinearOpMode {
+public class AutonomousBlue3 extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
@@ -70,56 +71,56 @@ public class AutonomousBlue extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-       // mantis.runDistance(1,"forward", 0.2);
+        // mantis.runDistance(1,"forward", 0.2);
         sleep(500);
 
 
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                        telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        sleep(1000);
-                        // step through the list of recognitions and display boundary info.
-                        //int i = 0;
-                        int location = 0;
-                        for (Recognition recognition : updatedRecognitions) {
-                            if(recognition.getLabel().equals("Duck")){
-                                if(recognition.getLeft()>350&&recognition.getLeft()<750){
-                                    location = 1;
-                                }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
-                                    location = 0;
-                                }
-                                else{
-                                    location = 2;
-                                }
-                            }
+        if (tfod != null) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+                telemetry.addData("# Object Detected", updatedRecognitions.size());
+                sleep(1000);
+                // step through the list of recognitions and display boundary info.
+                //int i = 0;
+                int location = 0;
+                for (Recognition recognition : updatedRecognitions) {
+                    if(recognition.getLabel().equals("Duck")){
+                        if(recognition.getLeft()>350&&recognition.getLeft()<750){
+                            location = 1;
+                        }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
+                            location = 2;
                         }
-                        telemetry.addData("Location", location);
-                        telemetry.update();
-                        //sleep(1000);
-                        if(location == 0){
-                            mantis.setCraneClawPos(0.4);
-                            mantis.runCraneArm(400, 0.1);
-                            // sleep(10000);
-                            mantis.runDistance(7, "forward", 0.5);
-                            mantis.turnLeft(40, 0.3);
-                            mantis.runDistance(15, "forward", 0.5);
-                            mantis.runDistance(14, "forward", 0.2);
-                            mantis.setCraneClawPos(0);
-                            mantis.runDistance(22, "backward", 0.5);
-                            mantis.turnLeft(55, 0.3);
-                            mantis.runDistance(26, "backward", 0.5);
-                            mantis.turnRight(90, 0.3);
-                            mantis.runDistance(13, "backward", 0.5);
-                            mantis.runDistance(5, "backward", 0.2);
-                            mantis.runCarousel();
-                            mantis.runDistance(21, "forward", 0.5);
-                            mantis.runCraneArm(0, 0.3);
+                        else{
+                            location = 0;
+                        }
+                    }
+                }
+                telemetry.addData("Location", location);
+                telemetry.update();
+                //sleep(1000);
+                if(location == 0){
+                    mantis.setCraneClawPos(0.4);
+                    mantis.runCraneArm(400, 0.1);
+                    // sleep(10000);
+                    mantis.runDistance(7, "forward", 0.5);
+                    mantis.turnLeft(40, 0.3);
+                    mantis.runDistance(15, "forward", 0.5);
+                    mantis.runDistance(14, "forward", 0.2);
+                    mantis.setCraneClawPos(0);
+                    mantis.runDistance(22, "backward", 0.5);
+                    mantis.turnLeft(55, 0.3);
+                    mantis.runDistance(26, "backward", 0.5);
+                    mantis.turnRight(90, 0.3);
+                    mantis.runDistance(13, "backward", 0.5);
+                    mantis.runDistance(5, "backward", 0.2);
+                    mantis.runCarousel();
+                    mantis.runDistance(21, "forward", 0.5);
+                    mantis.runCraneArm(0, 0.3);
 
-                        }else if(location == 1){
-                            AutonomousRun(mantis, 280, 0);
+                }else if(location == 1){
+                    AutonomousRun(mantis, 275, 0);
 
 //                            mantis.setCraneClawPos(0.4);
 //                            mantis.runCraneArm(250, 0.1);
@@ -137,8 +138,8 @@ public class AutonomousBlue extends LinearOpMode {
 //                            mantis.runCarousel();
 //                            mantis.runDistance(21, "forward", 0.5);
 //                            mantis.runCraneArm(0, 0.1);
-                        }else if(location == 2){
-                            AutonomousRun(mantis, 100, 0);
+                }else if(location == 2){
+                    AutonomousRun(mantis, 100, 0);
 //                            mantis.setCraneClawPos(0.4);
 //                            mantis.runCraneArm(100, 0.1);
 //                           // sleep(10000);
@@ -155,11 +156,11 @@ public class AutonomousBlue extends LinearOpMode {
 //                            mantis.runCarousel();
 //                            mantis.runDistance(21, "forward", 0.5);
 //                            mantis.runCraneArm(0, 0.1);
-                        }
-
-                    }
                 }
-                stop();
+
+            }
+        }
+        stop();
 
 
     }
@@ -218,18 +219,18 @@ public class AutonomousBlue extends LinearOpMode {
         mantis.runCraneArm(craneArmPos, 0.1);
         // sleep(10000);
         mantis.runDistance(7, "forward", 0.5);
-        mantis.turnLeft(40, 0.3);
+        mantis.turnRight(35, 0.3);
         mantis.runDistance(15, "forward", 0.5);
         mantis.runDistance(10+offset, "forward", 0.2);
         mantis.setCraneClawPos(0);
-        mantis.runDistance(18+offset, "backward", 0.5);
-        mantis.turnLeft(55, 0.3);
-        mantis.runDistance(26, "backward", 0.5);
-        mantis.turnRight(90, 0.3);
-        mantis.runDistance(13, "backward", 0.5);
-        mantis.runDistance(5, "backward", 0.2);
-        mantis.runCarousel();
-        mantis.runDistance(21, "forward", 0.5);
-        mantis.runCraneArm(0, 0.3);
+        mantis.runDistance(10+offset, "backward", 0.5);
+        mantis.turnLeft(125, 0.3);
+        mantis.runDistance(46, "forward", 1);
+//        mantis.turnRight(90, 0.3);
+//        mantis.runDistance(13, "backward", 0.5);
+//        mantis.runDistance(5, "backward", 0.2);
+//        mantis.runCarousel();
+//        mantis.runDistance(21, "forward", 0.5);
+//        mantis.runCraneArm(0, 0.3);
     }
 }
