@@ -119,7 +119,7 @@ public class AutonomousBlue extends LinearOpMode {
                             mantis.runCraneArm(0, 0.3);
 
                         }else if(location == 1){
-                            AutonomousRun(mantis, 280, 0);
+                            AutonomousRun(mantis, 300, 0);
 
 //                            mantis.setCraneClawPos(0.4);
 //                            mantis.runCraneArm(250, 0.1);

@@ -98,7 +98,7 @@ public class TeleOpRun extends LinearOpMode {
 //                mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                // mantisClass.runCraneArm(100, 0.1);
             }else if(arm_middle) {
-                mantisClass.crane_arm.setTargetPosition(275);
+                mantisClass.crane_arm.setTargetPosition(305);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 //mantisClass.runCraneArm(275, 0.1);
