@@ -26,8 +26,10 @@ public class MantisesClass {
     public final static double speed = 0.001;
     public final static double max_claw = 0.4;
     public final static double min_claw = 0.001;
-    public final static int min_arm = 1;
-    public final static int max_arm = 390;
+    public final static int reset_arm = 10;
+    public final static int down_arm = 130;
+    public final static int middle_arm = 290;
+    public final static int up_arm = 400;
 
     private static final DcMotor.RunMode encoder_true = DcMotor.RunMode.RUN_USING_ENCODER;
     private static final DcMotor.RunMode encoder_false = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
@@ -64,6 +66,7 @@ public class MantisesClass {
         crane_arm.setMode(encoder_true);
 
         crane_claw.setPosition(startPosition);
+        runCraneArm(reset_arm, 0.3);
 
 
         left_wheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -235,11 +238,11 @@ public class MantisesClass {
 
     }
     public void runCraneArm(int targetPosition, double power){
-        if(targetPosition> max_arm){
-            targetPosition = max_arm;
+        if(targetPosition> up_arm){
+            targetPosition = up_arm;
         }
-        if(targetPosition< min_arm){
-            targetPosition = min_arm;
+        if(targetPosition< reset_arm){
+            targetPosition = reset_arm;
         }
         crane_arm.setTargetPosition(targetPosition);
         crane_arm.setPower(power);

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp(name = "TeleOp!")
 public class TeleOpRun extends LinearOpMode {
     public void runOpMode(){
-        int rotations = 0;
+        //int rotations = 0;
         boolean claw_close;
         boolean claw_open;
         double left;
@@ -75,7 +75,7 @@ public class TeleOpRun extends LinearOpMode {
                 mantisClass.right_wheel.setPower(right);
             }
             if (arm_up){
-                mantisClass.crane_arm.setTargetPosition(400);
+                mantisClass.crane_arm.setTargetPosition(mantisClass.up_arm);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                if(rotations <365){
@@ -87,7 +87,7 @@ public class TeleOpRun extends LinearOpMode {
                // mantisClass.runCraneArm(400, 0.1);
 
             }else if (arm_down){
-                mantisClass.crane_arm.setTargetPosition(100);
+                mantisClass.crane_arm.setTargetPosition(mantisClass.down_arm);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                if (rotations > 0) {
@@ -98,13 +98,13 @@ public class TeleOpRun extends LinearOpMode {
 //                mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                // mantisClass.runCraneArm(100, 0.1);
             }else if(arm_middle) {
-                mantisClass.crane_arm.setTargetPosition(305);
+                mantisClass.crane_arm.setTargetPosition(mantisClass.middle_arm);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 //mantisClass.runCraneArm(275, 0.1);
             }
             else if(arm_off){
-                mantisClass.crane_arm.setTargetPosition(0);
+                mantisClass.crane_arm.setTargetPosition(mantisClass.reset_arm);
                 mantisClass.crane_arm.setPower(0.1);
                 mantisClass.crane_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
