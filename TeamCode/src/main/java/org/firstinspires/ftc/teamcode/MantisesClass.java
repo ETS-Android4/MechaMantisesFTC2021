@@ -26,7 +26,7 @@ public class MantisesClass {
     public final static double speed = 0.001;
     public final static double max_claw = 0.4;
     public final static double min_claw = 0.001;
-    public final static int reset_arm = 10;
+    public final static int reset_arm = 25;
     public final static int down_arm = 130;
     public final static int middle_arm = 290;
     public final static int up_arm = 400;
@@ -131,7 +131,7 @@ public class MantisesClass {
 //
 //    }
 
-    public void runDistance(int inches, String direction, double power){
+    public void runDistance(double inches, String direction, double power){
         int MOTOR_TICK_COUNT = 1440;
         double circumfrence = 3.14*4.001;
         double rotationsNeeded = inches/circumfrence;
@@ -276,6 +276,12 @@ public class MantisesClass {
     }
     public void runCarousel(){
         carousel.setTargetPosition(1480*5);
+        carousel.setPower(1);
+        carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        waitIfCarouselIsBusy();
+    }
+    public void runCarouselRev(){
+        carousel.setTargetPosition(-(1480*5));
         carousel.setPower(1);
         carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         waitIfCarouselIsBusy();

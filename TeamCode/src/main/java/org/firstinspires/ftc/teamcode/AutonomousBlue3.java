@@ -70,7 +70,7 @@ public class AutonomousBlue3 extends LinearOpMode {
                 telemetry.update();
                 //sleep(1000);
                 if(location == 1){
-                    AutonomousRun(mantis, mantis.down_arm, -9);
+                    AutonomousRun(mantis, mantis.down_arm, -7.75);
 
                 }else if(location == 2){
                     AutonomousRun(mantis, mantis.middle_arm, -7);
@@ -112,7 +112,7 @@ public class AutonomousBlue3 extends LinearOpMode {
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
-    private void AutonomousRun(MantisesClass mantis, int craneArmPos, int offset){
+    private void AutonomousRun(MantisesClass mantis, int craneArmPos, double offset){
         mantis.setCraneClawPos(0.4);
         mantis.runCraneArm(craneArmPos, 0.1);
         mantis.runDistance(7, "forward", 0.5);
@@ -123,6 +123,6 @@ public class AutonomousBlue3 extends LinearOpMode {
         mantis.runDistance(10+offset, "backward", 0.5);
         mantis.turnLeft(120, 0.3);
         mantis.runDistance(40, "forward", 1);
-        mantis.runCraneArm(MantisesClass.reset_arm, 0.3);
+        mantis.runCraneArm(mantis.reset_arm, 0.3);
     }
 }

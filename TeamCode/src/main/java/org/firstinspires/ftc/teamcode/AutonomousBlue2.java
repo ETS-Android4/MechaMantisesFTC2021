@@ -1,19 +1,28 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-@Autonomous(name = "AutonomousBlue2")
+@Autonomous(name = "AutonomousBlue2", group = "LinearOpMode")
 public class AutonomousBlue2 extends LinearOpMode {
-    public void runOpMode(){
+    @Override
+    public void runOpMode() {
+
+        telemetry.addData("Initializing", "DO NOT START OPMODE!");
+        telemetry.update();
         MantisesClass mantis = new MantisesClass(this);
         telemetry.addData("Ready To Start OpMode", "Press The Start Button To Start!");
         telemetry.update();
         waitForStart();
-        mantis.runDistance(15, "forward", 0.5);
-        mantis.turnLeft(90, 0.3);
-        mantis.runCraneArm(400, 0.1);
-        mantis.runDistance(35, "forward", 1);
-        mantis.runCraneArm(0, 0.1);
+        mantis.setCraneClawPos(0.4);
+        mantis.runCraneArm(mantis.down_arm, 0.1);
+        mantis.runDistance(7, "forward", 0.5);
+        mantis.turnRight(30, 0.3);
+        mantis.runDistance(16-7.75, "forward", 0.5);
+        mantis.runDistance(7, "forward", 0.2);
+        mantis.setCraneClawPos(0);
+        mantis.runDistance(10-7.75, "backward", 0.5);
+        mantis.turnLeft(120, 0.3);
+        mantis.runDistance(40, "forward", 1);
+        mantis.runCraneArm(mantis.reset_arm, 0.3);
         stop();
     }
 }
