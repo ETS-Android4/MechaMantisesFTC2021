@@ -53,16 +53,16 @@ public class AutonomousRed3 extends LinearOpMode {
             if (updatedRecognitions != null) {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 sleep(1000);
-                int location = 1;
+                int location = 3;
                 for (Recognition recognition : updatedRecognitions) {
                     if(recognition.getLabel().equals("Duck")){
-                        if(recognition.getLeft()>350&&recognition.getLeft()<750){
-                            location = 2;
+                        if(recognition.getLeft()>250&&recognition.getLeft()<750){
+                            location = 1;
                         }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
-                            location = 3;
+                            location = 2;
                         }
                         else{
-                            location = 1;
+                            location = 3;
                         }
                     }
                 }
@@ -70,12 +70,12 @@ public class AutonomousRed3 extends LinearOpMode {
                 telemetry.update();
                 //sleep(1000);
                 if(location == 1){
-                    AutonomousRun(mantis, mantis.down_arm, -7.75);
+                    AutonomousRun(mantis, mantis.down_arm, -7);
 
                 }else if(location == 2){
                     AutonomousRun(mantis, mantis.middle_arm, -7);
                 }else if(location == 3){
-                    AutonomousRun(mantis, mantis.up_arm, 6);
+                    AutonomousRun(mantis, mantis.up_arm, -1);
                 }
             }
         }
@@ -113,15 +113,16 @@ public class AutonomousRed3 extends LinearOpMode {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
     private void AutonomousRun(MantisesClass mantis, int craneArmPos, double offset){
-        mantis.setCraneClawPos(0.4);
+
         mantis.runCraneArm(craneArmPos, 0.1);
         mantis.runDistance(7, "forward", 0.5);
-        mantis.turnLeft(30, 0.3);
+        mantis.turnLeft(33, 0.3);
         mantis.runDistance(16+offset, "forward", 0.5);
         mantis.runDistance(7, "forward", 0.2);
         mantis.setCraneClawPos(0);
+        sleep(500);
         mantis.runDistance(10+offset, "backward", 0.5);
-        mantis.turnRight(120, 0.3);
+        mantis.turnRight(117, 0.3);
         mantis.runDistance(40, "forward", 1);
         mantis.runCraneArm(mantis.reset_arm, 0.3);
     }

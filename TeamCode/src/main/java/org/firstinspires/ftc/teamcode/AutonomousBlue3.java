@@ -56,9 +56,9 @@ public class AutonomousBlue3 extends LinearOpMode {
                 int location = 1;
                 for (Recognition recognition : updatedRecognitions) {
                     if(recognition.getLabel().equals("Duck")){
-                        if(recognition.getLeft()>350&&recognition.getLeft()<750){
+                        if(recognition.getLeft()>250&&recognition.getLeft()<650){
                             location = 2;
-                        }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
+                        }else if(recognition.getLeft()>650&&recognition.getLeft()<1100){
                             location = 3;
                         }
                         else{
@@ -113,7 +113,9 @@ public class AutonomousBlue3 extends LinearOpMode {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
     private void AutonomousRun(MantisesClass mantis, int craneArmPos, double offset){
-        mantis.setCraneClawPos(0.4);
+//        mantis.runCraneArm(mantis.reset_arm, 0.1);
+//        mantis.setCraneClawPos(0.4);
+//        sleep(500);
         mantis.runCraneArm(craneArmPos, 0.1);
         mantis.runDistance(7, "forward", 0.5);
         mantis.turnRight(30, 0.3);

@@ -12,7 +12,7 @@ public class AutonomousRed2 extends LinearOpMode {
         telemetry.addData("Ready To Start OpMode", "Press The Start Button To Start!");
         telemetry.update();
         waitForStart();
-        mantis.setCraneClawPos(0.4);
+
         mantis.runCraneArm(mantis.down_arm, 0.1);
         mantis.runDistance(7, "forward", 0.5);
         mantis.turnLeft(30, 0.3);

@@ -113,9 +113,7 @@ public class AutonomousRed extends LinearOpMode {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
     private void AutonomousRun(MantisesClass mantis, int craneArmPos, int offset){
-        mantis.runCraneArm(mantis.reset_arm, 0.1);
-        mantis.setCraneClawPos(0.4);
-        sleep(500);
+
         mantis.runCraneArm(craneArmPos, 0.1);
         mantis.runDistance(7, "forward", 0.6);
         mantis.turnRight(40, 0.3);

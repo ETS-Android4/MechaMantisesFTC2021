@@ -22,11 +22,12 @@ public class MantisesClass {
     public Servo camera = null;
     public BNO055IMU imu = null;
     public Orientation orientation;
-    public double startPosition = 0.0;
+    public double startPosition = 0.4;
+
     public final static double speed = 0.001;
     public final static double max_claw = 0.4;
     public final static double min_claw = 0.001;
-    public final static int reset_arm = 25;
+    public final static int reset_arm = 15;
     public final static int down_arm = 130;
     public final static int middle_arm = 290;
     public final static int up_arm = 400;
@@ -64,9 +65,9 @@ public class MantisesClass {
         right_wheel.setMode(encoder_true);
         carousel.setMode(encoder_true);
         crane_arm.setMode(encoder_true);
-
-        crane_claw.setPosition(startPosition);
         runCraneArm(reset_arm, 0.3);
+        crane_claw.setPosition(startPosition);
+
 
 
         left_wheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -275,7 +276,7 @@ public class MantisesClass {
 
     }
     public void runCarousel(){
-        carousel.setTargetPosition(1480*5);
+        carousel.setTargetPosition(1470*5);
         carousel.setPower(1);
         carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         waitIfCarouselIsBusy();
