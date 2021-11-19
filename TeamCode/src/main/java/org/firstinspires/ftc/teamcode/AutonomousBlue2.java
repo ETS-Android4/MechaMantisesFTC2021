@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous(name = "AutonomousBlue2", group = "LinearOpMode")
+@Disabled
 public class AutonomousBlue2 extends LinearOpMode {
     @Override
     public void runOpMode() {
