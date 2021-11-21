@@ -125,7 +125,7 @@ public class AutonomousBlue3 extends LinearOpMode {
         mantis.setCraneClawPos(0);
         mantis.runDistance(10+offset, "backward", 0.5);
         mantis.turnLeft(120, 0.3);
-        mantis.runDistance(40, "forward", 1);
+        mantis.runDistance(45, "forward", 1);
         mantis.runCraneArm(mantis.reset_arm, 0.3);
     }
 }
