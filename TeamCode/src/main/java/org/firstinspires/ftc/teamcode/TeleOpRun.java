@@ -51,7 +51,6 @@ public class TeleOpRun extends LinearOpMode {
             }else if (claw_close) {
                 mantisClass.crane_claw.setPosition(mantisClass.startPosition -= mantisClass.speed);
             }
-            else{}
             if (left==0&&right==0){
                 if(forward){
                     mantisClass.left_wheel.setPower(0.3);

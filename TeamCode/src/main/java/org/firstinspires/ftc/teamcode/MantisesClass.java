@@ -31,6 +31,8 @@ public class MantisesClass {
     public final static int down_arm = 130;
     public final static int middle_arm = 290;
     public final static int up_arm = 400;
+    private final static int MOTOR_TICK_COUNT = 1440;
+    private final static double circumfrence = 3.14*4.001;
 
     private static final DcMotor.RunMode encoder_true = DcMotor.RunMode.RUN_USING_ENCODER;
     private static final DcMotor.RunMode encoder_false = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
@@ -93,6 +95,7 @@ public class MantisesClass {
 
 
     }
+    //Test code for gyro
 //    public void turnLeftGyro(int degrees, double speed){
 //        int x = 0;
 //        orientation.firstAngle = 0;
@@ -133,8 +136,8 @@ public class MantisesClass {
 //    }
 
     public void runDistance(double inches, String direction, double power){
-        int MOTOR_TICK_COUNT = 1440;
-        double circumfrence = 3.14*4.001;
+//        int MOTOR_TICK_COUNT = 1440;
+//        double circumfrence = 3.14*4.001;
         double rotationsNeeded = inches/circumfrence;
         int drivingTarget = (int) (rotationsNeeded*MOTOR_TICK_COUNT);
         if(direction.equals("backward")){
@@ -197,8 +200,8 @@ public class MantisesClass {
     public void turnLeft(double degrees, double power){
         //resetChassisEncoders();
         degrees = degrees * 0.09111111111;
-        int MOTOR_TICK_COUNT = 1440;
-        double circumfrence = 3.14*4.001;
+//        int MOTOR_TICK_COUNT = 1440;
+//        double circumfrence = 3.14*4.001;
         double rotationsNeeded = degrees/circumfrence;
         int drivingTarget = (int) (rotationsNeeded*MOTOR_TICK_COUNT);
         int leftDrivingTarget = left_wheel.getCurrentPosition()-drivingTarget;
@@ -220,8 +223,8 @@ public class MantisesClass {
     public void turnRight(double degrees, double power){
         //resetChassisEncoders();
         degrees = degrees * 0.09111111111;
-        int MOTOR_TICK_COUNT = 1440;
-        double circumfrence = 3.14*4.001;
+//        int MOTOR_TICK_COUNT = 1440;
+//        double circumfrence = 3.14*4.001;
         double rotationsNeeded = degrees/circumfrence;
         int drivingTarget = (int) (rotationsNeeded*MOTOR_TICK_COUNT);
         int leftDrivingTarget = left_wheel.getCurrentPosition()+drivingTarget;

@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -56,9 +57,9 @@ public class AutonomousRed3 extends LinearOpMode {
                 int location = 3;
                 for (Recognition recognition : updatedRecognitions) {
                     if(recognition.getLabel().equals("Duck")){
-                        if(recognition.getLeft()>250&&recognition.getLeft()<750){
+                        if(recognition.getLeft()>100&&recognition.getLeft()<300){
                             location = 1;
-                        }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
+                        }else if(recognition.getLeft()>300&&recognition.getLeft()<550){
                             location = 2;
                         }
                         else{
@@ -75,7 +76,7 @@ public class AutonomousRed3 extends LinearOpMode {
                 }else if(location == 2){
                     AutonomousRun(mantis, mantis.middle_arm, -7);
                 }else if(location == 3){
-                    AutonomousRun(mantis, mantis.up_arm, -1);
+                    AutonomousRun(mantis, mantis.up_arm, -2.5);
                 }
             }
         }
@@ -91,7 +92,7 @@ public class AutonomousRed3 extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "MantisCam");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);

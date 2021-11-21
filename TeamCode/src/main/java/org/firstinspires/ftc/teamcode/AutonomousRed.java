@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -56,9 +57,9 @@ public class AutonomousRed extends LinearOpMode {
                 int location = 3;
                 for (Recognition recognition : updatedRecognitions) {
                     if(recognition.getLabel().equals("Duck")){
-                        if(recognition.getLeft()>350&&recognition.getLeft()<750){
+                        if(recognition.getLeft()>100&&recognition.getLeft()<300){
                             location = 1;
-                        }else if(recognition.getLeft()>750&&recognition.getLeft()<1100){
+                        }else if(recognition.getLeft()>300&&recognition.getLeft()<550){
                             location = 2;
                         }
                         else{
@@ -70,12 +71,12 @@ public class AutonomousRed extends LinearOpMode {
                 telemetry.update();
                 //sleep(1000);
                 if(location == 1){
-                    AutonomousRun(mantis, mantis.down_arm, -5);
+                    AutonomousRun(mantis, mantis.down_arm, -6);
 
                 }else if(location == 2){
-                    AutonomousRun(mantis, mantis.middle_arm, -4);
+                    AutonomousRun(mantis, mantis.middle_arm, -5);
                 }else if(location == 3){
-                    AutonomousRun(mantis, mantis.up_arm, -1);
+                    AutonomousRun(mantis, mantis.up_arm, -2);
                 }
             }
         }
@@ -91,7 +92,7 @@ public class AutonomousRed extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "MantisCam");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -116,7 +117,7 @@ public class AutonomousRed extends LinearOpMode {
 
         mantis.runCraneArm(craneArmPos, 0.1);
         mantis.runDistance(7, "forward", 0.6);
-        mantis.turnRight(40, 0.3);
+        mantis.turnRight(34, 0.3);
         mantis.runDistance(15+offset, "forward", 0.5);
         mantis.runDistance(14, "forward", 0.2);
         mantis.setCraneClawPos(0);

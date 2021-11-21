@@ -71,12 +71,12 @@ public class AutonomousBlue extends LinearOpMode {
                         telemetry.update();
                         //sleep(1000);
                         if(location == 1){
-                            AutonomousRun(mantis, mantis.down_arm, -5);
+                            AutonomousRun(mantis, mantis.down_arm, -6);
 
                         }else if(location == 2){
-                            AutonomousRun(mantis, mantis.middle_arm, -4);
+                            AutonomousRun(mantis, mantis.middle_arm, -4.5);
                         }else if(location == 3){
-                            AutonomousRun(mantis, mantis.up_arm, -1.5);
+                            AutonomousRun(mantis, mantis.up_arm, -2.5);
                         }
                     }
                 }
@@ -119,19 +119,19 @@ public class AutonomousBlue extends LinearOpMode {
 //        sleep(500);
         mantis.runCraneArm(craneArmPos, 0.1);
         mantis.runDistance(7, "forward", 0.5);
-        mantis.turnLeft(40, 0.3);
+        mantis.turnLeft(42, 0.3);
         mantis.runDistance(15+offset, "forward", 0.5);
         mantis.runDistance(14, "forward", 0.2);
         mantis.setCraneClawPos(0);
         mantis.runDistance(22+offset, "backward", 0.5);
         mantis.runCraneArm(mantis.reset_arm, 0.1);
         mantis.turnLeft(55, 0.3);
-        mantis.runDistance(26, "backward", 0.5);
+        mantis.runDistance(27, "backward", 0.5);
         mantis.turnRight(90, 0.3);
         mantis.runDistance(11, "backward", 0.5);
         mantis.runDistance(2, "backward", 0.2);
         mantis.runCarousel();
-        mantis.runDistance(21, "forward", 1);
+        mantis.runDistance(18, "forward", 1);
         mantis.runCraneArm(MantisesClass.reset_arm, 0.3);
 //        mantis.setCraneClawPos(0.4);
 //        mantis.runCraneArm(craneArmPos, 0.1);
